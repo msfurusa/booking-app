@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conference-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: conference-app
+  template:
+    metadata:
+      labels:
+        app: conference-app
+    spec:
+      containers:
+      - name: conference-app
+        image: your-docker-username/conference-app:latest
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: conference-app-service
+spec:
+  selector:
+    app: conference-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
