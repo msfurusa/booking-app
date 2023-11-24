@@ -1,4 +1,4 @@
-# Go Conference Ticket Booking System
+# Go Ticket Booking Application
 
 This is a simple Go application that simulates a conference ticket booking system. The program interacts with users, validates their input, and books tickets for a conference. Additionally, it sends a ticket confirmation email using goroutines to simulate asynchronous processing.
 
